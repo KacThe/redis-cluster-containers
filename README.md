@@ -1,4 +1,4 @@
-# redis Cluster Ansible Playbook
+# Redis Cluster Ansible Playbook
 
 > **Warning: Running the playbook restarts redis clusters and causes loss of all data!**
 
