@@ -1,0 +1,12 @@
+- name: Set test_clusters
+  set_fact:
+    clusters:
+      - "192.168.0.5:6380 192.168.0.5:6381 192.168.0.5:6382 -a {{ redis_password }}"
+      - "192.168.0.5:6390 192.168.0.5:6391 192.168.0.5:6392 -a {{ redis_password }}"
+      - "192.168.0.5:6370 192.168.0.5:6371 192.168.0.5:6372 -a {{ redis_password }}"
+
+- name: Run cluster creation for test
+  shell: "yes yes | redis-cli --cluster create {{ item }}"
+  loop: "{{ clusters }}"
+  when: clusters | length > 0
+  run_once: true

@@ -1,0 +1,13 @@
+- name: Set prod_clusters
+  set_fact:
+    clusters:
+      - "192.168.0.1:6390 192.168.0.1:6391 192.168.0.2:6390 192.168.0.2:6391 192.168.0.3:6390 192.168.0.3:6391 -a {{ redis_password }}"
+      - "192.168.0.1:6380 192.168.0.1:6381 192.168.0.2:6380 192.168.0.2:6381 192.168.0.3:6380 192.168.0.3:6381 -a {{ redis_password }}"
+      - "192.168.0.1:6370 192.168.0.1:6371 192.168.0.2:6370 192.168.0.2:6371 192.168.0.3:6370 192.168.0.3:6371 -a {{ redis_password }}"
+
+- name: Run cluster creation for prod
+  shell: "yes yes | redis-cli --cluster create {{ item }} --cluster-replicas 1"
+  loop: "{{ clusters }}"
+  when: clusters | length > 0
+  run_once: true
+  no_log: true

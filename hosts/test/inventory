@@ -1,0 +1,5 @@
+[all]
+vm-test ansible_host=10.17.10.214 ansible_user=admin
+
+[all:vars]
+envi=test

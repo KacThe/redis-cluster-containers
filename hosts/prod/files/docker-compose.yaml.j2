@@ -1,0 +1,156 @@
+version: '3.8'
+
+services:
+  redis1:
+    image: redis:8
+    container_name: redis_cluster1-1
+    ports:
+      - "6380:6380"
+      - "16380:16380"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6380
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16380
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6380
+    volumes:
+      - ./data/redis1:/data
+    networks:
+      - redis-net
+
+  redis2:
+    image: redis:8
+    container_name: redis_cluster1-2
+    ports:
+      - "6381:6381"
+      - "16381:16381"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6381
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16381
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6381
+    volumes:
+      - ./data/redis2:/data
+    networks:
+      - redis-net
+
+  redis3:
+    image: redis:8
+    container_name: redis_cluster2-1
+    ports:
+      - "6390:6390"
+      - "16390:16390"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6390
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16390
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6390
+    volumes:
+      - ./data/redis3:/data
+    networks:
+      - redis-net
+
+  redis4:
+    image: redis:8
+    container_name: redis_cluster2-2
+    ports:
+      - "6391:6391"
+      - "16391:16391"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6391
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16391
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6391
+    volumes:
+      - ./data/redis4:/data
+    networks:
+      - redis-net
+
+  redis5:
+    image: redis:8
+    container_name: redis_cluster3-1
+    ports:
+      - "6370:6370"
+      - "16370:16370"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6370
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16370
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6370
+    volumes:
+      - ./data/redis5:/data
+    networks:
+      - redis-net
+
+  redis6:
+    image: redis:8
+    container_name: redis_cluster3-2
+    ports:
+      - "6371:6371"
+      - "16371:16371"
+    command: >
+      redis-server
+      --requirepass {{ redis_password }}
+      --masterauth {{ redis_password }}
+      --port 6371
+      --appendonly no
+      --save ""
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --cluster-announce-bus-port 16371
+      --cluster-announce-ip {{ ansible_host }}
+      --cluster-require-full-coverage no
+      --cluster-announce-port 6371
+    volumes:
+      - ./data/redis6:/data
+    networks:
+      - redis-net
+
+networks:
+  redis-net:
+    driver: bridge
